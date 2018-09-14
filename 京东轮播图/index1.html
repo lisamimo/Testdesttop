@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>京东商城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .slider {
+            height: 340px;
+            width: 790px;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .slider .tu li {
+            position: absolute;
+            display: none;
+        }
+
+        .slider .tu li:first-child {
+            display: block;
+        }
+
+        .arrow {
+            display: none;
+        }
+
+        .slider:hover .arrow {
+            display: block;
+        }
+
+        .arrow-left,
+        .arrow-right {
+            font-family: "SimSun", "宋体";
+            width: 30px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            margin-top: -30px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 60px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 30px;
+        }
+
+        .arrow-left:hover,
+        .arrow-right:hover {
+            background-color: rgba(0, 0, 0, .5);
+        }
+
+        .arrow-left {
+            left: 0;
+        }
+
+        .arrow-right {
+            right: 0;
+        }
+
+        .circle {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        /*小圆点*/
+        .circle li {
+            float: left;
+            width: 5px;
+            height: 5px;
+            margin-right: 10px;
+            border:3px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .current {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="slider">
+    <ul class="tu">
+        <li><a href="#"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/6.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/7.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/8.jpg" alt=""></a></li>
+    </ul>
+    <!--小圆点-->
+    <ul class="circle">
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <!--箭头-->
+    <div class="arrow">
+        <span class="arrow-left">&lt;</span>
+        <span class="arrow-right">&gt;</span>
+    </div>
+</div>
+
+
+<script src="jquery-1.12.4.js"></script>
+<script>
+    $(function () {
+        //小圆点排他功能
+        function play(x){
+            x.addClass("current").siblings().removeClass("current");
+        };
+        var count = 0;
+        //设置定时器
+        function show() {
+            if (count < $(".slider .tu img").length - 1) {
+                count++;
+            } else {
+                count = 0;
+            }
+            $(".slider .tu li").eq(count).fadeIn(200).siblings().fadeOut(200);
+            play($(".slider .circle li").eq(count));
+        }
+         var id=setInterval(show,3000);
+        //点击右箭头
+        $(".arrow-right").click(function () {
+            clearInterval(id);
+            id=setInterval(show,3000);
+            if (count < $(".slider .tu img").length - 1) {
+                count++;
+            } else {
+                count = 0;
+            }
+            $(".slider .tu li").eq(count).fadeIn(200).siblings().fadeOut(200);
+            play($(".slider .circle li").eq(count));
+        });
+        //点左箭头
+        $(".arrow-left").click(function () {
+            clearInterval(id);
+            id=setInterval(show,3000);
+            if (count > 0) {
+                count--;
+            } else {
+                count = $(".slider .tu img").length - 1;
+            }
+            $(".slider .tu li").eq(count).fadeIn(200).siblings().fadeOut(200);
+            play($(".slider .circle li").eq(count));
+        });
+    })
+</script>
+
+</body>
+</html>
